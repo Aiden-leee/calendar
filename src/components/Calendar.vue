@@ -2,7 +2,7 @@
   <article class="calendar">
     <header>
       <div class="current-date">
-        <div class="current-day"></div>
+        <div class="current-day">df</div>
       </div>
     </header>
   </article>
