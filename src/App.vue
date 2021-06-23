@@ -1,36 +1,23 @@
 <template>
-  <div id="app">
-    <Calendar />
-  </div>
+	<div id="app">
+		<router-view path="/"></router-view>
+	</div>
 </template>
-<script>
-import Calendar from '@/components/Calendar.vue';
-export default {
-  components: {
-    Calendar
-  }
-}
-</script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+html {
+	width: 100%;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body {
+	position: relative;
+	font-family: NotoSansKR, '맑은 고딕', 'Malgun Gothic', 'Apple Gothic',
+		Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	color: #000;
+	background: #f4f7fa;
+	width: 100%;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
 }
 </style>
