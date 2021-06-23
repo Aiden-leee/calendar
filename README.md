@@ -1,24 +1,15 @@
-# calendar
+# Calendar Component
 
-## Project setup
-```
-npm install
-```
+년도, 월, 일을 변경하고 선택 할수 있는 Vue Calendar Component 입니다.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 기능과 특징
 
-### Compiles and minifies for production
+Vue Component Tag 설정값을 통해 사용합니다.
+```vue
+<Calendar width="400" mode="inline"/>
 ```
-npm run build
-```
+- 달력의 배경 이미지를 월별로 지정 가능.
+default 배경은 없는 이미지 입니다.
+- 년,월,일을 클릭 이벤트로 변경 합니다.
+- 인라인 모드와 position 모드가 가능합니다.
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
