@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<Calendar width="500" lang="en" :bg="season" />
+		<Calendar width="500" :bg="season" />
 	</div>
 </template>
 <script>
@@ -11,7 +11,7 @@ export default {
 		return {
 			season: [
 				'january.png',
-				'feburary.png',
+				'february.png',
 				'march.png',
 				'april.png',
 				'may.png',

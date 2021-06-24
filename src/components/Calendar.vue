@@ -11,8 +11,11 @@
 			<header>
 				<div class="current-date">
 					<div class="current-year">{{ currentDate.year }}</div>
-					<div class="current-month">{{ currentMonth }}</div>
-					<div class="current-day">{{ calendarLanguage[currentDay] }}</div>
+					<div class="current-month">
+						<i class="arrow prev" @click="prevMonth()">prev</i>
+						{{ currentMonth }}
+						<i class="arrow next" @click="nextMonth()">next</i>
+					</div>
 				</div>
 			</header>
 			<section>
@@ -22,15 +25,25 @@
 					</template>
 				</div>
 				<div class="dates">
-					<div class="date hidden-date"><span>29</span></div>
-					<div class="date hidden-date"><span>30</span></div>
-					<div class="date hidden-date"><span>31</span></div>
+					<template v-for="(n, index) in firstMonthDay - 1">
+						<div :key="'prev' + index" class="date hidden-date">
+							<span>{{ prevMonthDate + 1 - n }}</span>
+						</div>
+					</template>
 					<template v-for="(n, index) in currentMonthDate">
 						<div
 							:key="index"
 							class="date"
 							:class="{ active: n == currentDate.date }"
+							@click="currentDate.date = n"
 						>
+							<span>{{ n }}</span>
+						</div>
+					</template>
+					<template
+						v-for="(n, index) in 43 - (currentMonthDate + firstMonthDay)"
+					>
+						<div :key="'next' + index" class="date hidden-date">
 							<span>{{ n }}</span>
 						</div>
 					</template>
@@ -89,7 +102,7 @@ export default {
 		},
 		// 현재 요일
 		currentDay() {
-			let { date, month, year } = this.currentDate;
+			let { year, month, date } = this.currentDate;
 			return new Date(year, month, date).getDay();
 		},
 		// 현재 달의 요일 수
@@ -99,13 +112,30 @@ export default {
 		},
 		// 현재 월
 		currentMonth() {
-			return this.lang != 'en'
-				? this.currentDate.month + '월'
-				: this.month.en[this.currentDate.month];
+			if (this.lang != 'en') {
+				return this.currentDate.month + 1 + '월';
+			} else {
+				return this.month.en[this.currentDate.month];
+			}
 		},
 		// 배경 이미지
 		currentBgImage() {
-			return require('@/assets/' + this.bg[this.currentDate.month]);
+			let { month } = this.currentDate;
+			return require('@/assets/' + this.bg[month]);
+		},
+		// 이전 달 마지막 일
+		prevMonthDate() {
+			let { year, month } = this.currentDate;
+			let y = month == 0 ? year - 1 : year;
+			let m = month == 0 ? 12 : month;
+			return new Date(y, m, 0).getDate();
+		},
+		// 현재 날짜 1일의 요일
+		firstMonthDay() {
+			let { year, month } = this.currentDate;
+			let firstDay = new Date(year, month, 1).getDay();
+			if (firstDay == 0) firstDay = 7;
+			return firstDay;
 		},
 	},
 	created() {
@@ -117,6 +147,22 @@ export default {
 			this.currentDate.date = today.getDate();
 			this.currentDate.month = today.getMonth();
 			this.currentDate.year = today.getFullYear();
+		},
+		prevMonth() {
+			if (this.currentDate.month == 0) {
+				this.currentDate.month = 11;
+				this.currentDate.year -= 1;
+			} else {
+				this.currentDate.month -= 1;
+			}
+		},
+		nextMonth() {
+			if (this.currentDate.month == 11) {
+				this.currentDate.month = 0;
+				this.currentDate.year += 1;
+			} else {
+				this.currentDate.month += 1;
+			}
 		},
 	},
 };
@@ -131,11 +177,12 @@ export default {
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-color: #efefef;
 	.wrap {
-		padding: 12px 15px;
+		padding: 12px 10px;
+
 		&.bg {
 			color: #fff;
-
 			> section {
 				background: rgba(0, 0, 0, 0.5);
 				border-radius: 12px;
@@ -145,6 +192,7 @@ export default {
 			text-align: center;
 			padding: 10px 0;
 			.current-date {
+				color: #000;
 				.current-year {
 					font-size: 30px;
 					font-weight: bold;
@@ -153,6 +201,26 @@ export default {
 					font-size: 24px;
 					font-weight: bold;
 					margin-top: 10px;
+					.arrow {
+						display: inline-block;
+						width: 5px;
+						height: 5px;
+						border: solid #000;
+						border-width: 0 3px 3px 0;
+						padding: 3px;
+						text-indent: -9999px;
+						cursor: pointer;
+						opacity: 0.5;
+						&:hover {
+							opacity: 1;
+						}
+						&.prev {
+							transform: rotate(135deg);
+						}
+						&.next {
+							transform: rotate(-45deg);
+						}
+					}
 				}
 			}
 		}
@@ -197,7 +265,10 @@ export default {
 						}
 					}
 					&.hidden-date {
-						color: #808080;
+						color: #9c9c9c;
+						&:nth-child(7n) {
+							color: #cf5151;
+						}
 					}
 					&:nth-child(7n) {
 						color: #f92f2f;
