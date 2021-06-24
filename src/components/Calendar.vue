@@ -1,10 +1,17 @@
 <template>
-	<article id="calendar" class="calendar" :style="{ width: width + 'px' }">
-		<div class="wrap">
+	<article
+		id="calendar"
+		class="calendar"
+		:style="{
+			width: width + 'px',
+			backgroundImage: `url(${currentBgImage})`,
+		}"
+	>
+		<div class="wrap" :class="{ bg: currentBgImage }">
 			<header>
 				<div class="current-date">
 					<div class="current-year">{{ currentDate.year }}</div>
-					<div class="current-month">{{ currentDate.month }}</div>
+					<div class="current-month">{{ currentMonth }}</div>
 					<div class="current-day">{{ calendarLanguage[currentDay] }}</div>
 				</div>
 			</header>
@@ -15,11 +22,17 @@
 					</template>
 				</div>
 				<div class="dates">
-					<div class="date hidden-date">29</div>
-					<div class="date hidden-date">30</div>
-					<div class="date hidden-date">31</div>
+					<div class="date hidden-date"><span>29</span></div>
+					<div class="date hidden-date"><span>30</span></div>
+					<div class="date hidden-date"><span>31</span></div>
 					<template v-for="(n, index) in currentMonthDate">
-						<div :key="index" class="date">{{ n }}</div>
+						<div
+							:key="index"
+							class="date"
+							:class="{ active: n == currentDate.date }"
+						>
+							<span>{{ n }}</span>
+						</div>
 					</template>
 				</div>
 			</section>
@@ -35,6 +48,9 @@ export default {
 		},
 		lang: {
 			default: 'ko',
+		},
+		bg: {
+			type: Array,
 		},
 	},
 	data() {
@@ -81,6 +97,16 @@ export default {
 			let { month, year } = this.currentDate;
 			return new Date(year, month + 1, 0).getDate();
 		},
+		// 현재 월
+		currentMonth() {
+			return this.lang != 'en'
+				? this.currentDate.month + '월'
+				: this.month.en[this.currentDate.month];
+		},
+		// 배경 이미지
+		currentBgImage() {
+			return require('@/assets/' + this.bg[this.currentDate.month]);
+		},
 	},
 	created() {
 		this.getCurrentDate();
@@ -97,23 +123,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@mixin clearBoth {
-	&:after {
-		content: '';
-		display: block;
-		clear: both;
-	}
-}
 #calendar {
 	margin: 0 auto;
 	min-width: 400px;
 	border: 1px solid #aeaeae;
 	border-radius: 12px;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 	.wrap {
 		padding: 12px 15px;
+		&.bg {
+			color: #fff;
+
+			> section {
+				background: rgba(0, 0, 0, 0.5);
+				border-radius: 12px;
+			}
+		}
 		> header {
 			text-align: center;
-			height: 200px;
+			padding: 10px 0;
 			.current-date {
 				.current-year {
 					font-size: 30px;
@@ -127,15 +157,17 @@ export default {
 			}
 		}
 		> section {
-			// background: rgba(0, 0, 0, 0.5);
+			padding: 10px 0;
 			.week-days {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(14%, auto));
 				> .week-day {
 					text-align: center;
 					padding: 10px 0;
-					color: #000;
 					font-weight: bold;
+					&:nth-child(7n) {
+						color: #f92f2f;
+					}
 				}
 			}
 			.dates {
@@ -143,15 +175,32 @@ export default {
 				grid-template-columns: repeat(auto-fill, minmax(14%, auto));
 				row-gap: 10px;
 				.date {
-					// width: 14%;
-					padding: 10px 0;
 					text-align: center;
 					cursor: pointer;
+					> span {
+						display: inline-block;
+						width: 40px;
+						height: 40px;
+						line-height: 40px;
+						border-radius: 40px;
+					}
 					&:not(.hidden-date):hover {
-						background: #ccc;
+						> span {
+							background: #e2e2e2;
+						}
+					}
+					&:not(.hidden-date).active {
+						> span {
+							background: #cae5fd;
+							color: #0073d8;
+							font-weight: bold;
+						}
 					}
 					&.hidden-date {
-						color: #ccc;
+						color: #808080;
+					}
+					&:nth-child(7n) {
+						color: #f92f2f;
 					}
 				}
 			}

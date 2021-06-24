@@ -1,10 +1,30 @@
 <template>
-	<div class="home"><Calendar width="500" lang="en" /></div>
+	<div class="home">
+		<Calendar width="500" lang="en" :bg="season" />
+	</div>
 </template>
 <script>
 import Calendar from '@/components/Calendar.vue';
 export default {
 	name: 'Home',
+	data() {
+		return {
+			season: [
+				'january.png',
+				'feburary.png',
+				'march.png',
+				'april.png',
+				'may.png',
+				'june.png',
+				'july.png',
+				'august.png',
+				'september.png',
+				'october.png',
+				'november.png',
+				'december.png',
+			],
+		};
+	},
 	components: {
 		Calendar,
 	},
