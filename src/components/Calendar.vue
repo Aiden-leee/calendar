@@ -40,6 +40,7 @@
 							<span>{{ n }}</span>
 						</div>
 					</template>
+
 					<template
 						v-for="(n, index) in 43 - (currentMonthDate + firstMonthDay)"
 					>
@@ -198,10 +199,13 @@ export default {
 					font-weight: bold;
 				}
 				.current-month {
+					position: relative;
 					font-size: 24px;
 					font-weight: bold;
 					margin-top: 10px;
 					.arrow {
+						position: absolute;
+						top: 6px;
 						display: inline-block;
 						width: 5px;
 						height: 5px;
@@ -215,9 +219,11 @@ export default {
 							opacity: 1;
 						}
 						&.prev {
+							left: 10px;
 							transform: rotate(135deg);
 						}
 						&.next {
+							right: 10px;
 							transform: rotate(-45deg);
 						}
 					}
