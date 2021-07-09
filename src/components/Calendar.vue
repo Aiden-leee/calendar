@@ -4,7 +4,7 @@
 		class="calendar"
 		:style="{
 			width: width + 'px',
-			backgroundImage: `url(${currentBgImage})`,
+			backgroundImage: this.bg ? `url(${currentBgImage})` : false,
 		}"
 	>
 		<div class="wrap" :class="{ bg: currentBgImage }">
@@ -122,6 +122,9 @@ export default {
 		// 배경 이미지
 		currentBgImage() {
 			let { month } = this.currentDate;
+			if (this.bg == undefined) {
+				return;
+			}
 			return require('@/assets/' + this.bg[month]);
 		},
 		// 이전 달 마지막 일
@@ -149,6 +152,7 @@ export default {
 			this.currentDate.month = today.getMonth();
 			this.currentDate.year = today.getFullYear();
 		},
+		// 이전 달
 		prevMonth() {
 			if (this.currentDate.month == 0) {
 				this.currentDate.month = 11;
@@ -157,6 +161,7 @@ export default {
 				this.currentDate.month -= 1;
 			}
 		},
+		// 다음 달
 		nextMonth() {
 			if (this.currentDate.month == 11) {
 				this.currentDate.month = 0;
@@ -178,15 +183,27 @@ export default {
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-color: #efefef;
+	background-color: #fff;
 	.wrap {
 		padding: 12px 10px;
-
 		&.bg {
 			color: #fff;
-			> section {
-				background: rgba(0, 0, 0, 0.5);
-				border-radius: 12px;
+			background: rgba(0, 0, 0, 0.5);
+			border-radius: 12px;
+			> header {
+				.current-date {
+					.current-year {
+						color: #fff;
+					}
+					.current-month {
+						color: #fff;
+						> i {
+							border: solid #fff;
+							border-width: 0 3px 3px 0;
+							opacity: 0.8;
+						}
+					}
+				}
 			}
 		}
 		> header {
@@ -219,11 +236,11 @@ export default {
 							opacity: 1;
 						}
 						&.prev {
-							left: 10px;
+							left: 30px;
 							transform: rotate(135deg);
 						}
 						&.next {
-							right: 10px;
+							right: 30px;
 							transform: rotate(-45deg);
 						}
 					}
