@@ -10,8 +10,12 @@
 		<div class="wrap" :class="{ bg: currentBgImage }">
 			<header>
 				<div class="current-date">
-					<div class="current-year">{{ currentDate.year }}</div>
-					<div class="current-month">
+					<div class="current-year arrow-wrap">
+						<i class="arrow prev" @click="prevYear()">prev</i>
+						{{ currentDate.year }}
+						<i class="arrow next" @click="nextYear()">next</i>
+					</div>
+					<div class="current-month arrow-wrap">
 						<i class="arrow prev" @click="prevMonth()">prev</i>
 						{{ currentMonth }}
 						<i class="arrow next" @click="nextMonth()">next</i>
@@ -152,6 +156,12 @@ export default {
 			this.currentDate.month = today.getMonth();
 			this.currentDate.year = today.getFullYear();
 		},
+		prevYear() {
+			this.currentDate.year -= 1;
+		},
+		nextYear() {
+			this.currentDate.year += 1;
+		},
 		// 이전 달
 		prevMonth() {
 			if (this.currentDate.month == 0) {
@@ -192,10 +202,7 @@ export default {
 			border-radius: 12px;
 			> header {
 				.current-date {
-					.current-year {
-						color: #fff;
-					}
-					.current-month {
+					.arrow-wrap {
 						color: #fff;
 						> i {
 							border: solid #fff;
@@ -220,30 +227,6 @@ export default {
 					font-size: 24px;
 					font-weight: bold;
 					margin-top: 10px;
-					.arrow {
-						position: absolute;
-						top: 6px;
-						display: inline-block;
-						width: 5px;
-						height: 5px;
-						border: solid #000;
-						border-width: 0 3px 3px 0;
-						padding: 3px;
-						text-indent: -9999px;
-						cursor: pointer;
-						opacity: 0.5;
-						&:hover {
-							opacity: 1;
-						}
-						&.prev {
-							left: 30px;
-							transform: rotate(135deg);
-						}
-						&.next {
-							right: 30px;
-							transform: rotate(-45deg);
-						}
-					}
 				}
 			}
 		}
@@ -297,6 +280,35 @@ export default {
 						color: #f92f2f;
 					}
 				}
+			}
+		}
+	}
+	// arrow ui
+	.arrow-wrap {
+		position: relative;
+		.arrow {
+			position: absolute;
+			top: 6px;
+			display: inline-block;
+			width: 5px;
+			height: 5px;
+			border: solid #000;
+			border-width: 0 3px 3px 0;
+			padding: 3px;
+			text-indent: -9999px;
+			overflow: hidden;
+			cursor: pointer;
+			opacity: 0.5;
+			&:hover {
+				opacity: 1;
+			}
+			&.prev {
+				left: 30px;
+				transform: rotate(135deg);
+			}
+			&.next {
+				right: 30px;
+				transform: rotate(-45deg);
 			}
 		}
 	}
