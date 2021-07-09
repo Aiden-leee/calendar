@@ -6,7 +6,7 @@
 
 Vue Component Tag 설정값을 통해 사용합니다.
 ```vue
-<Calendar width="400" mode="inline"/>
+<Calendar width="400" mode="inline" :bg="imglist" />
 ```
 - 달력의 배경 이미지를 월별로 지정 가능.
 default 배경은 없는 이미지 입니다.
