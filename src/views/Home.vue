@@ -7,7 +7,7 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<Calendar id="calendar02" width="500" :inline="true" />
+				<Calendar id="calendar02" width="500" :position="true" />
 			</div>
 		</div>
 	</div>

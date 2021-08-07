@@ -1,9 +1,9 @@
 <template>
 	<div class="calendar-wrap">
-		<template v-if="inline">
+		<template v-if="position">
 			<input
 				type="text"
-				class="inline-calendar"
+				class="pos-calendar"
 				@click="showCalendar"
 				:value="inlineCurrentDate"
 				readonly
@@ -13,7 +13,7 @@
 		<article
 			:id="calendarId"
 			class="calendar"
-			:class="{ inline: inline, showCalendar: showCalendarValue }"
+			:class="{ pos: position, showCalendar: showCalendarValue }"
 			:style="{
 				width: width + 'px',
 				backgroundImage: this.bg ? `url(${currentBgImage})` : false,
@@ -86,7 +86,7 @@ export default {
 		bg: {
 			type: Array,
 		},
-		inline: {
+		position: {
 			type: Boolean,
 		},
 	},
@@ -218,7 +218,7 @@ export default {
 		closeCalendar(event) {
 			let { target } = event;
 			// class calednar, inline-calendar 를 제외한 영역 클릭시 calendar 닫기
-			if (target.closest('.calendar, .inline-calendar') == null) {
+			if (target.closest('.calendar, .pos-calendar') == null) {
 				this.showCalendarValue = false;
 			}
 		},
@@ -230,7 +230,7 @@ export default {
 .calendar-wrap {
 	position: relative;
 	display: inline-block;
-	.inline-calendar {
+	.pos-calendar {
 		border: 1px solid #ccc;
 		padding: 8px 10px;
 		border-radius: 6px;
@@ -245,7 +245,7 @@ export default {
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-color: #fff;
-		&.inline {
+		&.pos {
 			display: none;
 			position: absolute;
 			margin-top: 5px;
