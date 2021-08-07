@@ -210,9 +210,11 @@ export default {
 				this.currentDate.month += 1;
 			}
 		},
+		// 모달 캘린더 열기
 		showCalendar() {
 			this.showCalendarValue = true;
 		},
+		// 모달 캘린더 닫기
 		closeCalendar(event) {
 			let { target } = event;
 			// class calednar, inline-calendar 를 제외한 영역 클릭시 calendar 닫기
