@@ -1,6 +1,15 @@
 <template>
 	<div class="home">
-		<Calendar width="500" :bg="season" />
+		<div class="row">
+			<div class="col">
+				<Calendar id="calendar01" width="500" :bg="season" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<Calendar id="calendar02" width="500" :inline="true" />
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -33,5 +42,11 @@ export default {
 <style lang="scss">
 .home {
 	padding: 10px;
+	.row {
+		margin-bottom: 20px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }
 </style>
