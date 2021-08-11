@@ -4,8 +4,6 @@
 			<div class="col">
 				<Calendar id="calendar01" width="500" :bg="season" />
 			</div>
-		</div>
-		<div class="row">
 			<div class="col">
 				<Calendar id="calendar02" width="500" :position="true" />
 			</div>
@@ -43,9 +41,14 @@ export default {
 .home {
 	padding: 10px;
 	.row {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 		margin-bottom: 20px;
 		&:last-child {
 			margin-bottom: 0;
+		}
+		.col {
+			margin: 0 10px;
 		}
 	}
 }

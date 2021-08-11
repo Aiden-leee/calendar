@@ -230,6 +230,7 @@ export default {
 .calendar-wrap {
 	position: relative;
 	display: inline-block;
+	vertical-align: top;
 	.pos-calendar {
 		border: 1px solid #ccc;
 		padding: 8px 10px;
