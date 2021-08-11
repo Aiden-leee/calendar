@@ -13,7 +13,7 @@
 		<article
 			:id="calendarId"
 			class="calendar"
-			:class="{ pos: position, showCalendar: showCalendarValue }"
+			:class="{ pos: position, showCalendar: isShowCalendar }"
 			:style="{
 				width: width + 'px',
 				backgroundImage: this.bg ? `url(${currentBgImage})` : false,
@@ -117,7 +117,7 @@ export default {
 				month: 0,
 				year: 0,
 			},
-			showCalendarValue: false,
+			isShowCalendar: false,
 		};
 	},
 	computed: {
@@ -212,14 +212,14 @@ export default {
 		},
 		// 모달 캘린더 열기
 		showCalendar() {
-			this.showCalendarValue = true;
+			this.isShowCalendar = true;
 		},
 		// 모달 캘린더 닫기
 		closeCalendar(event) {
 			let { target } = event;
 			// class calednar, inline-calendar 를 제외한 영역 클릭시 calendar 닫기
 			if (target.closest('.calendar, .pos-calendar') == null) {
-				this.showCalendarValue = false;
+				this.isShowCalendar = false;
 			}
 		},
 	},
